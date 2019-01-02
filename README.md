@@ -10,4 +10,4 @@ The redesign of OSHI intends to achieve:
 - A caching policy to improve performance
 - Generic code for fetching that can be reused
 - Usage similar to OSHI 4
-- Runtime dependence on JNA only
+- Runtime dependence on [JNA](https://github.com/java-native-access/jna) only
