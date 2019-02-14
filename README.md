@@ -46,6 +46,7 @@ The definitions file will also be converted into supplemental documentation (mar
 | platforms | A list of the **only** platforms that the attribute is compatible with. Values must match [JNA's `Platform` class](http://java-native-access.github.io/jna/5.2.0/javadoc/com/sun/jna/Platform.html). |
 | incompatible | A list of platforms that the attribute is **not** compatible with. Values must match [JNA's `Platform` class](http://java-native-access.github.io/jna/5.2.0/javadoc/com/sun/jna/Platform.html). |
 | external | A list of external dependencies (like OpenHardwareMonitor) that the attribute requires |
+| permissions | Whether elevated permissions are required. Values are `elevated` or `none`. |
 
 Here's a contrived example displaying all of these elements:
 ```
@@ -58,6 +59,7 @@ Here's a contrived example displaying all of these elements:
   - power_on_time: The disk's total power-on time in hours
       platforms: linux                           # Only compatible with Linux
       external: smart                            # Needs S.M.A.R.T. access
+      permissions: elevated                      # Needs highest user permissions
 ```
 
 ### [API Return Types and Error Handling](https://github.com/oshi/oshi5/issues/2)
