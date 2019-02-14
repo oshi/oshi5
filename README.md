@@ -21,7 +21,44 @@ OSHI's API layer will be automatically generated from a central YAML definitions
 
 The generator runs on every build (via Maven integration) and updates source files in the API layer's packages according to the central definitions file. Generated files will be committed to the repository.
 
-The definitions file can also be converted into supplemental documentation that contains every feature's description and compatibility requirements in a single place. This addresses the concern brought up [in this comment](https://github.com/oshi/oshi5/issues/2#issuecomment-451220174).
+The definitions file will also be converted into supplemental documentation (markdown on the OSHI wiki) that contains every feature's description, type, compatibility requirements, and links to the relevant Javadoc in a single place. This addresses the concern brought up [in this comment](https://github.com/oshi/oshi5/issues/2#issuecomment-451220174) about spreading features out in the Javadoc.
+
+#### Attribute Definitions YAML Specification
+```
+# OSHI Attribute Definitions
+
+- <container name>:
+  - <attribute name>: <short description of attribute>
+    type: <Java type of attribute>
+    platforms: <comma-separated list of required (whitelisted) platforms>
+    incompatible: <comma-separated list of incompatible (blacklisted) platforms>
+    external: <comma-separated list of external dependencies>
+  ...
+...
+```
+
+| Field | Description |
+|----------------|-----------------------------------|
+| container name | CamelCase identifier which must start with a capital letter. Must be unique across all containers. |
+| attribute name | Lowercase identifier in underscore format (for easy conversion to any other case format by the generator). Must be unique across all attributes in the same container. |
+| attribute description | Short description of what the attribute contains |
+| type | The attribute's Java type (which could be other containers) |
+| platforms | A list of the **only** platforms that the attribute is compatible with |
+| incompatible | A list of platforms that the attribute is **not** compatible with |
+| external | A list of external dependencies (like OpenHardwareMonitor) that the attribute requires |
+
+Here's a contrived example displaying all of these elements:
+```
+- Disk
+  - read_bytes: The number of bytes read by the disk
+      type: Long
+      incompatible: sol                          # All platforms except Solaris
+  - partitions: The disk's partitions
+      type: Partition[]                          # Nested container
+  - power_on_time: The disk's total power-on time in hours
+      platforms: lin                             # Only compatible with Linux
+      external: smart                            # Needs S.M.A.R.T. access
+```
 
 ### [API Return Types and Error Handling](https://github.com/oshi/oshi5/issues/2)
 `// TODO`
