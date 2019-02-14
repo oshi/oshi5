@@ -57,6 +57,7 @@ Here's a contrived example displaying all of these elements:
   - partitions: The disk's partitions
       type: Partition[]                          # Nested container
   - power_on_time: The disk's total power-on time in hours
+      type: Long
       platforms: linux                           # Only compatible with Linux
       external: smart                            # Needs S.M.A.R.T. access
       permissions: elevated                      # Needs highest user permissions
