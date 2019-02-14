@@ -43,8 +43,8 @@ The definitions file will also be converted into supplemental documentation (mar
 | attribute name | Lowercase identifier in underscore format (for easy conversion to any other case format by the generator). Must be unique across all attributes in the same container. |
 | attribute description | Short description of what the attribute contains |
 | type | The attribute's Java type (which could be other containers) |
-| platforms | A list of the **only** platforms that the attribute is compatible with |
-| incompatible | A list of platforms that the attribute is **not** compatible with |
+| platforms | A list of the **only** platforms that the attribute is compatible with. Values must match [JNA's `Platform` class](http://java-native-access.github.io/jna/5.2.0/javadoc/com/sun/jna/Platform.html). |
+| incompatible | A list of platforms that the attribute is **not** compatible with. Values must match [JNA's `Platform` class](http://java-native-access.github.io/jna/5.2.0/javadoc/com/sun/jna/Platform.html). |
 | external | A list of external dependencies (like OpenHardwareMonitor) that the attribute requires |
 
 Here's a contrived example displaying all of these elements:
@@ -52,11 +52,11 @@ Here's a contrived example displaying all of these elements:
 - Disk
   - read_bytes: The number of bytes read by the disk
       type: Long
-      incompatible: sol                          # All platforms except Solaris
+      incompatible: solaris                      # All platforms except Solaris
   - partitions: The disk's partitions
       type: Partition[]                          # Nested container
   - power_on_time: The disk's total power-on time in hours
-      platforms: lin                             # Only compatible with Linux
+      platforms: linux                           # Only compatible with Linux
       external: smart                            # Needs S.M.A.R.T. access
 ```
 
