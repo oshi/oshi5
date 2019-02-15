@@ -39,7 +39,7 @@ The definitions file will also be converted into supplemental documentation (mar
 
 | Field | Description |
 |----------------|-----------------------------------|
-| container name | CamelCase identifier which must start with a capital letter. Must be unique across all containers. |
+| container name | CamelCase dot-path identifier which uniquely names a container. |
 | attribute name | Lowercase identifier in underscore format (for easy conversion to any other case format by the generator). Must be unique across all attributes in the same container. |
 | attribute description | Short description of what the attribute contains |
 | type | The attribute's Java type (which could be other containers) |
@@ -50,7 +50,7 @@ The definitions file will also be converted into supplemental documentation (mar
 
 Here's a contrived example displaying all of these elements:
 ```
-- Disk
+- Hardware.Disk
   - read_bytes: The number of bytes read by the disk
       type: Long
       incompatible: solaris                      # All platforms except Solaris
