@@ -37,120 +37,121 @@ import oshi.driver.SystemDriverWindows;
  */
 public final class OSHI {
 
-	private static final PlatformEnum PLATFORM;
+    private static final PlatformEnum PLATFORM;
 
-	static {
-		if (Platform.isWindows()) {
-			PLATFORM = PlatformEnum.WINDOWS;
-		} else if (Platform.isLinux()) {
-			PLATFORM = PlatformEnum.LINUX;
-		} else if (Platform.isMac()) {
-			PLATFORM = PlatformEnum.MACOSX;
-		} else if (Platform.isSolaris()) {
-			PLATFORM = PlatformEnum.SOLARIS;
-		} else if (Platform.isFreeBSD()) {
-			PLATFORM = PlatformEnum.FREEBSD;
-		} else {
-			PLATFORM = PlatformEnum.UNSUPPORTED;
-		}
-	}
+    static {
+        if (Platform.isWindows()) {
+            PLATFORM = PlatformEnum.WINDOWS;
+        } else if (Platform.isLinux()) {
+            PLATFORM = PlatformEnum.LINUX;
+        } else if (Platform.isMac()) {
+            PLATFORM = PlatformEnum.MACOSX;
+        } else if (Platform.isSolaris()) {
+            PLATFORM = PlatformEnum.SOLARIS;
+        } else if (Platform.isFreeBSD()) {
+            PLATFORM = PlatformEnum.FREEBSD;
+        } else {
+            PLATFORM = PlatformEnum.UNSUPPORTED;
+        }
+    }
 
-	/**
-	 * Get the system's platform type.
-	 * 
-	 * @return The platform type
-	 */
-	public static PlatformEnum getPlatform() {
-		return PLATFORM;
-	}
+    /**
+     * Get the system's platform type.
+     * 
+     * @return The platform type
+     */
+    public static PlatformEnum getPlatform() {
+        return PLATFORM;
+    }
 
-	/**
-	 * Build a disposable handle that provides cross-platform system information.
-	 * 
-	 * @return A new {@link MultiSystem} handle
-	 */
-	public static MultiSystem getSystem() {
-		switch (PLATFORM) {
-		case FREEBSD:
-			return new SystemDriver(new SystemDriverFreeBsd());
-		case LINUX:
-			return new SystemDriver(new SystemDriverLinux());
-		case MACOSX:
-			return new SystemDriver(new SystemDriverMac());
-		case SOLARIS:
-			return new SystemDriver(new SystemDriverSolaris());
-		case WINDOWS:
-			return new SystemDriver(new SystemDriverWindows());
-		default:
-			throw new UnsupportedOperationException("OSHI is not supported on this platform");
-		}
-	}
+    /**
+     * Build a disposable handle that provides cross-platform system
+     * information.
+     * 
+     * @return A new {@link MultiSystem} handle
+     */
+    public static MultiSystem getSystem() {
+        switch (PLATFORM) {
+        case FREEBSD:
+            return new SystemDriver(new SystemDriverFreeBsd());
+        case LINUX:
+            return new SystemDriver(new SystemDriverLinux());
+        case MACOSX:
+            return new SystemDriver(new SystemDriverMac());
+        case SOLARIS:
+            return new SystemDriver(new SystemDriverSolaris());
+        case WINDOWS:
+            return new SystemDriver(new SystemDriverWindows());
+        default:
+            throw new UnsupportedOperationException("OSHI is not supported on this platform");
+        }
+    }
 
-	/**
-	 * Build a disposable handle that provides Windows system information.<br>
-	 * <br>
-	 * Note: for cross-platform contexts, always use {@link #getSystem()}.
-	 * 
-	 * @return A new {@link WindowsSystem} handle
-	 */
-	public static WindowsSystem getWindowsSystem() {
-		if (PLATFORM != PlatformEnum.WINDOWS)
-			throw new UnsupportedOperationException("Cannot obtain Windows handle on this platform");
-		return new SystemDriverWindows();
-	}
+    /**
+     * Build a disposable handle that provides Windows system information.<br>
+     * <br>
+     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * 
+     * @return A new {@link WindowsSystem} handle
+     */
+    public static WindowsSystem getWindowsSystem() {
+        if (PLATFORM != PlatformEnum.WINDOWS)
+            throw new UnsupportedOperationException("Cannot obtain Windows handle on this platform");
+        return new SystemDriverWindows();
+    }
 
-	/**
-	 * Build a disposable handle that provides Linux system information.<br>
-	 * <br>
-	 * Note: for cross-platform contexts, always use {@link #getSystem()}.
-	 * 
-	 * @return A new {@link LinuxSystem} handle
-	 */
-	public static LinuxSystem getLinuxSystem() {
-		if (PLATFORM != PlatformEnum.LINUX)
-			throw new UnsupportedOperationException("Cannot obtain Linux handle on this platform");
-		return new SystemDriverLinux();
-	}
+    /**
+     * Build a disposable handle that provides Linux system information.<br>
+     * <br>
+     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * 
+     * @return A new {@link LinuxSystem} handle
+     */
+    public static LinuxSystem getLinuxSystem() {
+        if (PLATFORM != PlatformEnum.LINUX)
+            throw new UnsupportedOperationException("Cannot obtain Linux handle on this platform");
+        return new SystemDriverLinux();
+    }
 
-	/**
-	 * Build a disposable handle that provides macOS system information.<br>
-	 * <br>
-	 * Note: for cross-platform contexts, always use {@link #getSystem()}.
-	 * 
-	 * @return A new {@link MacSystem} handle
-	 */
-	public static MacSystem getMacSystem() {
-		if (PLATFORM != PlatformEnum.MACOSX)
-			throw new UnsupportedOperationException("Cannot obtain MacOS handle on this platform");
-		return new SystemDriverMac();
-	}
+    /**
+     * Build a disposable handle that provides macOS system information.<br>
+     * <br>
+     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * 
+     * @return A new {@link MacSystem} handle
+     */
+    public static MacSystem getMacSystem() {
+        if (PLATFORM != PlatformEnum.MACOSX)
+            throw new UnsupportedOperationException("Cannot obtain MacOS handle on this platform");
+        return new SystemDriverMac();
+    }
 
-	/**
-	 * Build a disposable handle that provides Solaris system information.<br>
-	 * <br>
-	 * Note: for cross-platform contexts, always use {@link #getSystem()}.
-	 * 
-	 * @return A new {@link SolarisSystem} handle
-	 */
-	public static SolarisSystem getSolarisSystem() {
-		if (PLATFORM != PlatformEnum.SOLARIS)
-			throw new UnsupportedOperationException("Cannot obtain Solaris handle on this platform");
-		return new SystemDriverSolaris();
-	}
+    /**
+     * Build a disposable handle that provides Solaris system information.<br>
+     * <br>
+     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * 
+     * @return A new {@link SolarisSystem} handle
+     */
+    public static SolarisSystem getSolarisSystem() {
+        if (PLATFORM != PlatformEnum.SOLARIS)
+            throw new UnsupportedOperationException("Cannot obtain Solaris handle on this platform");
+        return new SystemDriverSolaris();
+    }
 
-	/**
-	 * Build a disposable handle that provides FreeBSD system information.<br>
-	 * <br>
-	 * Note: for cross-platform contexts, always use {@link #getSystem()}.
-	 * 
-	 * @return A new {@link FreeBsdSystem} handle
-	 */
-	public static FreeBsdSystem getFreebsdSystem() {
-		if (PLATFORM != PlatformEnum.FREEBSD)
-			throw new UnsupportedOperationException("Cannot obtain FreeBSD handle on this platform");
-		return new SystemDriverFreeBsd();
-	}
+    /**
+     * Build a disposable handle that provides FreeBSD system information.<br>
+     * <br>
+     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * 
+     * @return A new {@link FreeBsdSystem} handle
+     */
+    public static FreeBsdSystem getFreebsdSystem() {
+        if (PLATFORM != PlatformEnum.FREEBSD)
+            throw new UnsupportedOperationException("Cannot obtain FreeBSD handle on this platform");
+        return new SystemDriverFreeBsd();
+    }
 
-	private OSHI() {
-	}
+    private OSHI() {
+    }
 }

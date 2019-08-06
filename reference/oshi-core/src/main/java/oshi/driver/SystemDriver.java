@@ -34,37 +34,37 @@ import oshi.api.hardware.nic.Nic;
 @SuppressWarnings("unchecked")
 public class SystemDriver implements MultiSystem {
 
-	private Object driver;
+    private Object driver;
 
-	public SystemDriver(Object driver) {
-		this.driver = Objects.requireNonNull(driver);
-	}
+    public SystemDriver(Object driver) {
+        this.driver = Objects.requireNonNull(driver);
+    }
 
-	@Override
-	public Stream<Nic> getNicStream() {
-		try {
-			return (Stream<Nic>) driver.getClass().getMethod("getNicStream").invoke(driver);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public Stream<Nic> getNicStream() {
+        try {
+            return (Stream<Nic>) driver.getClass().getMethod("getNicStream").invoke(driver);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public Stream<Disk> getDiskStream() {
-		try {
-			return (Stream<Disk>) driver.getClass().getMethod("getDiskStream").invoke(driver);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public Stream<Disk> getDiskStream() {
+        try {
+            return (Stream<Disk>) driver.getClass().getMethod("getDiskStream").invoke(driver);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public Firmware getFirmware() {
-		try {
-			return (Firmware) driver.getClass().getMethod("getFirmware").invoke(driver);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public Firmware getFirmware() {
+        try {
+            return (Firmware) driver.getClass().getMethod("getFirmware").invoke(driver);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

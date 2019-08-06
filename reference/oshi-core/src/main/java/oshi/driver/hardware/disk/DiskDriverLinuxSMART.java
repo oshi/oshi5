@@ -51,18 +51,18 @@ import oshi.old.ExecutingCommand;
 
 public class DiskDriverLinuxSMART extends ExtensionDriver {
 
-	private DiskContainerLinux container;
+    private DiskContainerLinux container;
 
-	public DiskDriverLinuxSMART(DiskContainerLinux container) {
-		this.container = container;
-	}
+    public DiskDriverLinuxSMART(DiskContainerLinux container) {
+        this.container = container;
+    }
 
-	@DiskQuery({ MODEL_FAMILY, FIRMWARE_VERSION, ROTATION_RATE, READ_ERROR_RATE, SPIN_UP_TIME, START_STOP_CYCLES,
-			REALLOCATED_SECTORS, SEEK_ERROR_RATE, POWER_ON_TIME, SPIN_RETRIES, CALIBRATION_RETRIES, POWER_CYCLES,
-			POWEROFF_RETRACTS, LOAD_CYCLES, TEMPERATURE, REALLOCATED_EVENTS, CURRENT_PENDING_SECTOR,
-			OFFLINE_UNCORRECTABLE, CRC_ERRORS, MULTIZONE_ERROR_RATE })
-	private void diskStats() {
-		// TODO parse command
-		ExecutingCommand.runNative("sudo smartctl --all " + container.name);
-	}
+    @DiskQuery({ MODEL_FAMILY, FIRMWARE_VERSION, ROTATION_RATE, READ_ERROR_RATE, SPIN_UP_TIME, START_STOP_CYCLES,
+            REALLOCATED_SECTORS, SEEK_ERROR_RATE, POWER_ON_TIME, SPIN_RETRIES, CALIBRATION_RETRIES, POWER_CYCLES,
+            POWEROFF_RETRACTS, LOAD_CYCLES, TEMPERATURE, REALLOCATED_EVENTS, CURRENT_PENDING_SECTOR,
+            OFFLINE_UNCORRECTABLE, CRC_ERRORS, MULTIZONE_ERROR_RATE })
+    private void diskStats() {
+        // TODO parse command
+        ExecutingCommand.runNative("sudo smartctl --all " + container.name);
+    }
 }

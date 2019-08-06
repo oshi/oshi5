@@ -42,43 +42,43 @@ import oshi.driver.ExtensionDriver;
  */
 public class NicDriverJava extends ExtensionDriver {
 
-	protected NetworkInterface instance;
-	private NicContainer container;
+    protected NetworkInterface instance;
+    private NicContainer container;
 
-	public NicDriverJava(NicContainer container, NetworkInterface instance) {
-		this.container = container;
-		this.instance = instance;
-	}
+    public NicDriverJava(NicContainer container, NetworkInterface instance) {
+        this.container = container;
+        this.instance = instance;
+    }
 
-	@NicQuery(VIRTUAL)
-	private void virtual() {
-		container.virtual = instance.isVirtual();
-	}
+    @NicQuery(VIRTUAL)
+    private void virtual() {
+        container.virtual = instance.isVirtual();
+    }
 
-	@NicQuery(NAME)
-	private void name() {
-		container.name = instance.getName();
-	}
+    @NicQuery(NAME)
+    private void name() {
+        container.name = instance.getName();
+    }
 
-	@NicQuery(MAC)
-	private void mac() throws SocketException {
-	}
+    @NicQuery(MAC)
+    private void mac() throws SocketException {
+    }
 
-	@NicQuery(IPV4)
-	private void ipv4() {
-		container.ipv4 = instance.getInterfaceAddresses().stream().map(n -> n.getAddress().getHostAddress())
-				.filter(address -> !address.contains(":")).toArray(String[]::new);
-	}
+    @NicQuery(IPV4)
+    private void ipv4() {
+        container.ipv4 = instance.getInterfaceAddresses().stream().map(n -> n.getAddress().getHostAddress())
+                .filter(address -> !address.contains(":")).toArray(String[]::new);
+    }
 
-	@NicQuery(IPV6)
-	private void ipv6() {
-		container.ipv6 = instance.getInterfaceAddresses().stream().map(n -> n.getAddress().getHostAddress())
-				.filter(address -> address.contains(":")).toArray(String[]::new);
-	}
+    @NicQuery(IPV6)
+    private void ipv6() {
+        container.ipv6 = instance.getInterfaceAddresses().stream().map(n -> n.getAddress().getHostAddress())
+                .filter(address -> address.contains(":")).toArray(String[]::new);
+    }
 
-	@NicQuery(MTU)
-	private void mtu() throws SocketException {
-		container.mtu = instance.getMTU();
-	}
+    @NicQuery(MTU)
+    private void mtu() throws SocketException {
+        container.mtu = instance.getMTU();
+    }
 
 }

@@ -32,22 +32,22 @@ import oshi.api.hardware.nic.NicSolaris;
 
 public class SystemDriverSolaris implements SolarisSystem {
 
-	@Override
-	public Stream<NicSolaris> getNicStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Stream<NicSolaris> getNicStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Stream<DiskSolaris> getDiskStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Stream<DiskSolaris> getDiskStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public FirmwareSolaris getFirmware() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public FirmwareSolaris getFirmware() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

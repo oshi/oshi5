@@ -25,6 +25,6 @@ package oshi.api;
 
 public class UnsupportedPlatformException extends RuntimeException {
 
-	private static final long serialVersionUID = -5396626644287029649L;
+    private static final long serialVersionUID = -5396626644287029649L;
 
 }

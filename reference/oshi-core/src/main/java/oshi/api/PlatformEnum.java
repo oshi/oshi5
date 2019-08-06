@@ -28,34 +28,34 @@ package oshi.api;
  */
 public enum PlatformEnum {
 
-	/**
-	 * Microsoft's Windows operating system.
-	 */
-	WINDOWS,
+    /**
+     * Microsoft's Windows operating system.
+     */
+    WINDOWS,
 
-	/**
-	 * An operating system built on the Linux kernel.
-	 */
-	LINUX,
+    /**
+     * An operating system built on the Linux kernel.
+     */
+    LINUX,
 
-	/**
-	 * Apple's macOS (OS X) operating system.
-	 */
-	MACOSX,
+    /**
+     * Apple's macOS (OS X) operating system.
+     */
+    MACOSX,
 
-	/**
-	 * The Solaris (SunOS) operating system.
-	 */
-	SOLARIS,
+    /**
+     * The Solaris (SunOS) operating system.
+     */
+    SOLARIS,
 
-	/**
-	 * The FreeBSD operating system.
-	 */
-	FREEBSD,
+    /**
+     * The FreeBSD operating system.
+     */
+    FREEBSD,
 
-	/**
-	 * Any unsupported operating system such as OpenBSD, AIX, WindowsCE, Android,
-	 * etc.
-	 */
-	UNSUPPORTED;
+    /**
+     * Any unsupported operating system such as OpenBSD, AIX, WindowsCE,
+     * Android, etc.
+     */
+    UNSUPPORTED;
 }

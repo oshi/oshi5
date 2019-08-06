@@ -29,18 +29,18 @@ package oshi.driver;
  */
 public enum QueryStatus {
 
-	/**
-	 * Indicates the query completed successfully and the corresponding container
-	 * object has been updated.
-	 */
-	OK,
+    /**
+     * Indicates the query completed successfully and the corresponding
+     * container object has been updated.
+     */
+    OK,
 
-	/**
-	 * Indicates the query timed-out and the corresponding container object has not
-	 * been updated.
-	 */
-	TIMEOUT,
+    /**
+     * Indicates the query timed-out and the corresponding container object has
+     * not been updated.
+     */
+    TIMEOUT,
 
-	// TODO
-	MISSED_READING, PROCESS_TERMINATED;
+    // TODO
+    MISSED_READING, PROCESS_TERMINATED;
 }

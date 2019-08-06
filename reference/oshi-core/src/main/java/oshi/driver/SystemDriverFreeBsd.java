@@ -32,22 +32,22 @@ import oshi.api.hardware.nic.NicFreeBsd;
 
 public class SystemDriverFreeBsd implements FreeBsdSystem {
 
-	@Override
-	public Stream<NicFreeBsd> getNicStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Stream<NicFreeBsd> getNicStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Stream<DiskFreeBsd> getDiskStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Stream<DiskFreeBsd> getDiskStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public FirmwareFreeBsd getFirmware() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public FirmwareFreeBsd getFirmware() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

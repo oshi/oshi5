@@ -29,6 +29,6 @@ package oshi.api;
  */
 public class DetachedContainerException extends IllegalStateException {
 
-	private static final long serialVersionUID = 979546852734821377L;
+    private static final long serialVersionUID = 979546852734821377L;
 
 }
