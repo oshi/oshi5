@@ -25,98 +25,99 @@
 package oshi.api.hardware.nic;
 
 import javax.annotation.processing.Generated;
+import oshi.api.Container;
 
 @Generated("oshi.ApiGenerator")
-public interface Nic {
-  String getName();
+public interface Nic extends Container {
+    String getName();
 
-  String getDescription();
+    String getDescription();
 
-  Integer getMtu();
+    Integer getMtu();
 
-  Integer queryMtu();
+    Integer queryMtu();
 
-  String getMac();
+    String getMac();
 
-  String queryMac();
+    String queryMac();
 
-  Boolean getVirtual();
+    Boolean getVirtual();
 
-  Boolean queryVirtual();
+    Boolean queryVirtual();
 
-  String[] getIpv4();
+    String[] getIpv4();
 
-  String[] queryIpv4();
+    String[] queryIpv4();
 
-  String[] getIpv6();
+    String[] getIpv6();
 
-  String[] queryIpv6();
+    String[] queryIpv6();
 
-  String getBroadcast();
+    String getBroadcast();
 
-  String queryBroadcast();
+    String queryBroadcast();
 
-  String getNetmask();
+    String getNetmask();
 
-  String queryNetmask();
+    String queryNetmask();
 
-  Long getReadBytes();
+    Long getReadBytes();
 
-  Long queryReadBytes();
+    Long queryReadBytes();
 
-  Long getWriteBytes();
+    Long getWriteBytes();
 
-  Long queryWriteBytes();
+    Long queryWriteBytes();
 
-  Long getReadPackets();
+    Long getReadPackets();
 
-  Long queryReadPackets();
+    Long queryReadPackets();
 
-  Long getWritePackets();
+    Long getWritePackets();
 
-  Long queryWritePackets();
+    Long queryWritePackets();
 
-  Long getReadErrors();
+    Long getReadErrors();
 
-  Long queryReadErrors();
+    Long queryReadErrors();
 
-  Long getWriteErrors();
+    Long getWriteErrors();
 
-  Long queryWriteErrors();
+    Long queryWriteErrors();
 
-  Long getReadDrops();
+    Long getReadDrops();
 
-  Long queryReadDrops();
+    Long queryReadDrops();
 
-  Long getWriteDrops();
+    Long getWriteDrops();
 
-  Long queryWriteDrops();
+    Long queryWriteDrops();
 
-  Long getWriteCollisions();
+    Long getWriteCollisions();
 
-  Long queryWriteCollisions();
+    Long queryWriteCollisions();
 
-  Long getLinkSpeed();
+    Long getLinkSpeed();
 
-  Long queryLinkSpeed();
+    Long queryLinkSpeed();
 
-  Boolean getDefaultGateway();
+    Boolean getDefaultGateway();
 
-  Boolean queryDefaultGateway();
+    Boolean queryDefaultGateway();
 
-  Boolean getFlagUp();
+    Boolean getFlagUp();
 
-  Boolean queryFlagUp();
+    Boolean queryFlagUp();
 
-  Boolean getFlagRunning();
+    Boolean getFlagRunning();
 
-  Boolean queryFlagRunning();
+    Boolean queryFlagRunning();
 
-  Boolean getFlagLoopback();
+    Boolean getFlagLoopback();
 
-  Boolean queryFlagLoopback();
+    Boolean queryFlagLoopback();
 
-  Boolean getFlagMulticast();
+    Boolean getFlagMulticast();
 
-  Boolean queryFlagMulticast();
+    Boolean queryFlagMulticast();
 }

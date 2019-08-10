@@ -31,10 +31,10 @@ import oshi.api.hardware.firmware.FirmwareWindows;
 import oshi.api.hardware.nic.NicWindows;
 
 @Generated("oshi.ApiGenerator")
-public interface WindowsSystem {
-  Stream<NicWindows> getNicStream();
+public interface WindowsSystem extends MultiSystem {
+    Stream<? extends NicWindows> getNicStream();
 
-  Stream<DiskWindows> getDiskStream();
+    Stream<? extends DiskWindows> getDiskStream();
 
-  FirmwareWindows getFirmware();
+    FirmwareWindows getFirmware();
 }

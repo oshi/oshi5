@@ -26,6 +26,7 @@ package oshi.api.hardware.nic.internal;
 
 import java.lang.Override;
 import javax.annotation.processing.Generated;
+import oshi.api.AttributeKey;
 import oshi.api.DetachedContainerException;
 import oshi.api.hardware.nic.NicWindows;
 import oshi.driver.ComponentDriver;
@@ -35,87 +36,101 @@ import oshi.driver.ComponentDriver;
  */
 @Generated("oshi.ApiGenerator")
 public class NicContainerWindows extends NicContainer implements NicWindows {
-  private transient ComponentDriver driver;
+    /**
+     * The interface's locally unique identifier
+     */
+    public Long luid;
 
-  /**
-   * The interface's locally unique identifier
-   */
-  public Long luid;
+    /**
+     * The interface's globally unique identifier
+     */
+    public String guid;
 
-  /**
-   * The interface's globally unique identifier
-   */
-  public String guid;
+    /**
+     * Whether the interface is in a paused state
+     */
+    public Boolean paused;
 
-  /**
-   * Whether the interface is in a paused state
-   */
-  public Boolean paused;
+    /**
+     * Whether the interface is in a low-power state
+     */
+    public Boolean lowpower;
 
-  /**
-   * Whether the interface is in a low-power state
-   */
-  public Boolean lowpower;
-
-  @Override
-  public Long getLuid() {
-    return luid;
-  }
-
-  @Override
-  public Long queryLuid() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getLuid() {
+        return luid;
     }
-    driver.query(NicAttribute.LUID);
-    return luid;
-  }
 
-  @Override
-  public String getGuid() {
-    return guid;
-  }
-
-  @Override
-  public String queryGuid() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryLuid() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(NicAttributeEnum.LUID);
+        return luid;
     }
-    driver.query(NicAttribute.GUID);
-    return guid;
-  }
 
-  @Override
-  public Boolean getPaused() {
-    return paused;
-  }
-
-  @Override
-  public Boolean queryPaused() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getGuid() {
+        return guid;
     }
-    driver.query(NicAttribute.PAUSED);
-    return paused;
-  }
 
-  @Override
-  public Boolean getLowpower() {
-    return lowpower;
-  }
-
-  @Override
-  public Boolean queryLowpower() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String queryGuid() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(NicAttributeEnum.GUID);
+        return guid;
     }
-    driver.query(NicAttribute.LOWPOWER);
-    return lowpower;
-  }
 
-  public void attach(ComponentDriver driver) {
-    this.driver = driver;
-    super.attach(driver);
-    // Query all constant attributes:
-  }
+    @Override
+    public Boolean getPaused() {
+        return paused;
+    }
+
+    @Override
+    public Boolean queryPaused() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(NicAttributeEnum.PAUSED);
+        return paused;
+    }
+
+    @Override
+    public Boolean getLowpower() {
+        return lowpower;
+    }
+
+    @Override
+    public Boolean queryLowpower() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(NicAttributeEnum.LOWPOWER);
+        return lowpower;
+    }
+
+    public void attach(ComponentDriver driver) {
+        this.driver = driver;
+        super.attach(driver);
+        // Query all constant attributes:
+    }
+
+    @Override
+    public <T> T get(AttributeKey<T> key) {
+        switch ((NicAttributeEnum) key.getAttributeEnum()) {
+        default:
+            return super.get(key);
+        case LUID:
+            return (T) luid;
+        case GUID:
+            return (T) guid;
+        case PAUSED:
+            return (T) paused;
+        case LOWPOWER:
+            return (T) lowpower;
+        }
+    }
 }

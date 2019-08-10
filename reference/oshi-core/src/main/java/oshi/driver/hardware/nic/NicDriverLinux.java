@@ -23,25 +23,7 @@
  */
 package oshi.driver.hardware.nic;
 
-import static oshi.api.hardware.nic.internal.NicAttribute.BROADCAST;
-import static oshi.api.hardware.nic.internal.NicAttribute.DEFAULT_GATEWAY;
-import static oshi.api.hardware.nic.internal.NicAttribute.DESCRIPTION;
-import static oshi.api.hardware.nic.internal.NicAttribute.FLAG_LOOPBACK;
-import static oshi.api.hardware.nic.internal.NicAttribute.FLAG_MULTICAST;
-import static oshi.api.hardware.nic.internal.NicAttribute.FLAG_RUNNING;
-import static oshi.api.hardware.nic.internal.NicAttribute.FLAG_UP;
-import static oshi.api.hardware.nic.internal.NicAttribute.LINK_SPEED;
-import static oshi.api.hardware.nic.internal.NicAttribute.MTU;
-import static oshi.api.hardware.nic.internal.NicAttribute.NETMASK;
-import static oshi.api.hardware.nic.internal.NicAttribute.READ_BYTES;
-import static oshi.api.hardware.nic.internal.NicAttribute.READ_DROPS;
-import static oshi.api.hardware.nic.internal.NicAttribute.READ_ERRORS;
-import static oshi.api.hardware.nic.internal.NicAttribute.READ_PACKETS;
-import static oshi.api.hardware.nic.internal.NicAttribute.WRITE_BYTES;
-import static oshi.api.hardware.nic.internal.NicAttribute.WRITE_COLLISIONS;
-import static oshi.api.hardware.nic.internal.NicAttribute.WRITE_DROPS;
-import static oshi.api.hardware.nic.internal.NicAttribute.WRITE_ERRORS;
-import static oshi.api.hardware.nic.internal.NicAttribute.WRITE_PACKETS;
+import static oshi.api.hardware.nic.internal.NicAttributeEnum.*;
 
 import oshi.api.hardware.nic.internal.NicContainerLinux;
 import oshi.api.hardware.nic.internal.NicQuery;
@@ -51,10 +33,6 @@ import oshi.old.FileUtil;
 public class NicDriverLinux extends ComponentDriver {
 
     private NicContainerLinux container;
-
-    public NicDriverLinux(NicContainerLinux container) {
-        this.container = container;
-    }
 
     @NicQuery(READ_BYTES)
     private void readBytes() {

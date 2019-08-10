@@ -21,15 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.driver.system;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.util.stream.Stream;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import oshi.api.WindowsSystem;
+import oshi.api.hardware.disk.DiskWindows;
+import oshi.api.hardware.firmware.FirmwareWindows;
+import oshi.api.hardware.nic.NicWindows;
 
-@Retention(RUNTIME)
-@Target(METHOD)
-public @interface RequiresRoot {
+public class SystemDriverWindows implements WindowsSystem {
+
+    @Override
+    public Stream<NicWindows> getNicStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Stream<DiskWindows> getDiskStream() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public FirmwareWindows getFirmware() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

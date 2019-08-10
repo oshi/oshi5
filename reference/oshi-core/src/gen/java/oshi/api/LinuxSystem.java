@@ -31,10 +31,10 @@ import oshi.api.hardware.firmware.FirmwareLinux;
 import oshi.api.hardware.nic.NicLinux;
 
 @Generated("oshi.ApiGenerator")
-public interface LinuxSystem {
-  Stream<NicLinux> getNicStream();
+public interface LinuxSystem extends MultiSystem {
+    Stream<? extends NicLinux> getNicStream();
 
-  Stream<DiskLinux> getDiskStream();
+    Stream<? extends DiskLinux> getDiskStream();
 
-  FirmwareLinux getFirmware();
+    FirmwareLinux getFirmware();
 }

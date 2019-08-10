@@ -21,33 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.api.internal;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
-import oshi.api.MacSystem;
-import oshi.api.hardware.disk.DiskMac;
-import oshi.api.hardware.firmware.FirmwareMac;
-import oshi.api.hardware.nic.NicMac;
+import oshi.api.AttributeKey;
+import oshi.api.Container;
+import oshi.driver.AttributeEnum;
+import oshi.driver.ComponentDriver;
 
-public class SystemDriverMac implements MacSystem {
+/**
+ * A superclass for all generated container classes.
+ */
+public abstract class AbstractContainer implements Container {
+
+    /**
+     * The root driver instance associated with this container. If {@code null},
+     * this container is considered to be <b>DETACHED</b> and all attempts to
+     * update its attributes will fail. Otherwise, the container is considered
+     * to be <b>ATTACHED</b>.
+     */
+    protected transient ComponentDriver driver;
 
     @Override
-    public Stream<NicMac> getNicStream() {
-        // TODO Auto-generated method stub
-        return null;
+    public void query(AttributeKey<?>... keys) {
+        // Translate attribute-keys into attribute-enums for the driver
+        driver.query(Arrays.stream(keys).map(key -> key.getAttributeEnum()).toArray(AttributeEnum[]::new));
     }
-
-    @Override
-    public Stream<DiskMac> getDiskStream() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FirmwareMac getFirmware() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

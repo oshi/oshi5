@@ -31,10 +31,10 @@ import oshi.api.hardware.firmware.FirmwareMac;
 import oshi.api.hardware.nic.NicMac;
 
 @Generated("oshi.ApiGenerator")
-public interface MacSystem {
-  Stream<NicMac> getNicStream();
+public interface MacSystem extends MultiSystem {
+    Stream<? extends NicMac> getNicStream();
 
-  Stream<DiskMac> getDiskStream();
+    Stream<? extends DiskMac> getDiskStream();
 
-  FirmwareMac getFirmware();
+    FirmwareMac getFirmware();
 }

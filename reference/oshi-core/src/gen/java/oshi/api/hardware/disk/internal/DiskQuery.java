@@ -34,5 +34,5 @@ import javax.annotation.processing.Generated;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface DiskQuery {
-  DiskAttribute[] value();
+    DiskAttributeEnum[] value();
 }

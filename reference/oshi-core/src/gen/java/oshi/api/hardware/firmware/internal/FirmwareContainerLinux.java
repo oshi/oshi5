@@ -26,6 +26,7 @@ package oshi.api.hardware.firmware.internal;
 
 import java.lang.Override;
 import javax.annotation.processing.Generated;
+import oshi.api.AttributeKey;
 import oshi.api.hardware.firmware.FirmwareLinux;
 import oshi.driver.ComponentDriver;
 
@@ -34,22 +35,30 @@ import oshi.driver.ComponentDriver;
  */
 @Generated("oshi.ApiGenerator")
 public class FirmwareContainerLinux extends FirmwareContainer implements FirmwareLinux {
-  private transient ComponentDriver driver;
+    /**
+     * Whether the BIOS supports UEFI mode
+     */
+    public Boolean uefi;
 
-  /**
-   * Whether the BIOS supports UEFI mode
-   */
-  public Boolean uefi;
+    @Override
+    public Boolean getUefi() {
+        return uefi;
+    }
 
-  @Override
-  public Boolean getUefi() {
-    return uefi;
-  }
+    public void attach(ComponentDriver driver) {
+        this.driver = driver;
+        super.attach(driver);
+        // Query all constant attributes:
+        driver.query(FirmwareAttributeEnum.UEFI);
+    }
 
-  public void attach(ComponentDriver driver) {
-    this.driver = driver;
-    super.attach(driver);
-    // Query all constant attributes:
-    driver.query(FirmwareAttribute.UEFI);
-  }
+    @Override
+    public <T> T get(AttributeKey<T> key) {
+        switch ((FirmwareAttributeEnum) key.getAttributeEnum()) {
+        default:
+            return super.get(key);
+        case UEFI:
+            return (T) uefi;
+        }
+    }
 }

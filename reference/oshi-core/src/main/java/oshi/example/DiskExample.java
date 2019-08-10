@@ -23,18 +23,79 @@
  */
 package oshi.example;
 
+import static oshi.api.hardware.disk.DiskAttribute.POWER_CYCLES;
+import static oshi.api.hardware.disk.DiskAttribute.POWER_ON_TIME;
+import static oshi.api.hardware.disk.DiskAttribute.READ_BYTES;
+import static oshi.api.hardware.disk.DiskAttribute.SIZE;
+import static oshi.api.hardware.disk.DiskAttribute.TEMPERATURE;
+import static oshi.api.hardware.disk.DiskAttribute.WRITE_BYTES;
+
 import oshi.api.OSHI;
 
 public class DiskExample {
     public static void main(String[] args) {
 
+        example1();
+        example2();
+        example3();
+        example4();
+    }
+
+    private static void example1() {
+        System.out.println("Cross-platform access that makes one query");
+
+        OSHI.getSystem().getDiskStream().forEach(disk -> {
+            disk.query(SIZE, READ_BYTES, WRITE_BYTES);
+
+            System.out.println("Disk name: " + disk.getName());
+            System.out.println("\tSize: " + disk.getSize());
+            System.out.println("\tRead bytes: " + disk.getReadBytes());
+            System.out.println("\tWrite bytes: " + disk.getWriteBytes());
+        });
+
+        System.out.println();
+    }
+
+    private static void example2() {
+        System.out.println("Platform-specific access that makes one query");
+
         OSHI.getLinuxSystem().getDiskStream().forEach(disk -> {
+            disk.query(SIZE, READ_BYTES, WRITE_BYTES);
+
+            System.out.println("Disk name: " + disk.getName());
+            System.out.println("\tSize: " + disk.getSize());
+            System.out.println("\tRead bytes: " + disk.getReadBytes());
+            System.out.println("\tWrite bytes: " + disk.getWriteBytes());
+        });
+
+        System.out.println();
+    }
+
+    private static void example3() {
+        System.out.println("Cross-platform access that makes three queries");
+
+        OSHI.getSystem().getDiskStream().forEach(disk -> {
             System.out.println("Disk name: " + disk.getName());
             System.out.println("\tSize: " + disk.querySize());
             System.out.println("\tRead bytes: " + disk.queryReadBytes());
             System.out.println("\tWrite bytes: " + disk.queryWriteBytes());
-            System.out.println("\tQueue length: " + disk.queryQueueLength());
-            System.out.println("\tTransfer time: " + disk.queryTransferTime());
         });
+
+        System.out.println();
+    }
+
+    private static void example4() {
+        System.out.println("Cross-platform access for SMART attributes");
+
+        OSHI.getSystem().getDiskStream().forEach(disk -> {
+            disk.query(POWER_CYCLES, POWER_ON_TIME, TEMPERATURE);
+
+            System.out.println("Disk name: " + disk.getName());
+            System.out.println("\tPower cycles: " + disk.getPowerCycles());
+            System.out.println("\tPower on hours: " + disk.getPowerOnTime());
+            System.out.println("\tTemperature: " + disk.getTemperature());
+        });
+
+        System.out.println();
     }
 }

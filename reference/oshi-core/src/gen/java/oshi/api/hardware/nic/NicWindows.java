@@ -28,19 +28,19 @@ import javax.annotation.processing.Generated;
 
 @Generated("oshi.ApiGenerator")
 public interface NicWindows extends Nic {
-  Long getLuid();
+    Long getLuid();
 
-  Long queryLuid();
+    Long queryLuid();
 
-  String getGuid();
+    String getGuid();
 
-  String queryGuid();
+    String queryGuid();
 
-  Boolean getPaused();
+    Boolean getPaused();
 
-  Boolean queryPaused();
+    Boolean queryPaused();
 
-  Boolean getLowpower();
+    Boolean getLowpower();
 
-  Boolean queryLowpower();
+    Boolean queryLowpower();
 }

@@ -23,16 +23,7 @@
  */
 package oshi.driver.hardware.disk;
 
-import static oshi.api.hardware.disk.internal.DiskAttribute.MODEL;
-import static oshi.api.hardware.disk.internal.DiskAttribute.NAME;
-import static oshi.api.hardware.disk.internal.DiskAttribute.QUEUE_LENGTH;
-import static oshi.api.hardware.disk.internal.DiskAttribute.READS;
-import static oshi.api.hardware.disk.internal.DiskAttribute.READ_BYTES;
-import static oshi.api.hardware.disk.internal.DiskAttribute.SERIAL;
-import static oshi.api.hardware.disk.internal.DiskAttribute.SIZE;
-import static oshi.api.hardware.disk.internal.DiskAttribute.TRANSFER_TIME;
-import static oshi.api.hardware.disk.internal.DiskAttribute.WRITES;
-import static oshi.api.hardware.disk.internal.DiskAttribute.WRITE_BYTES;
+import static oshi.api.hardware.disk.internal.DiskAttributeEnum.*;
 
 import oshi.api.hardware.disk.internal.DiskContainerLinux;
 import oshi.api.hardware.disk.internal.DiskQuery;
@@ -43,10 +34,6 @@ import oshi.old.Udev;
 public class DiskDriverLinux extends ComponentDriver {
 
     private DiskContainerLinux container;
-
-    public DiskDriverLinux(DiskContainerLinux container) {
-        this.container = container;
-    }
 
     /**
      * The size of a logical sector in bytes.

@@ -32,9 +32,9 @@ import oshi.api.hardware.nic.Nic;
 
 @Generated("oshi.ApiGenerator")
 public interface MultiSystem {
-  Stream<Nic> getNicStream();
+    Stream<? extends Nic> getNicStream();
 
-  Stream<Disk> getDiskStream();
+    Stream<? extends Disk> getDiskStream();
 
-  Firmware getFirmware();
+    Firmware getFirmware();
 }

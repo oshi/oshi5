@@ -26,81 +26,101 @@ package oshi.api.hardware.firmware.internal;
 
 import java.lang.Override;
 import javax.annotation.processing.Generated;
+import oshi.api.AttributeKey;
 import oshi.api.hardware.firmware.Firmware;
+import oshi.api.internal.AbstractContainer;
 import oshi.driver.ComponentDriver;
 
 /**
  * The system's firmware
  */
 @Generated("oshi.ApiGenerator")
-public abstract class FirmwareContainer implements Firmware {
-  private transient ComponentDriver driver;
+public abstract class FirmwareContainer extends AbstractContainer implements Firmware {
+    public String name;
 
-  public String name;
+    /**
+     * The BIOS manufacturer title
+     */
+    public String manufacturer;
 
-  /**
-   * The BIOS manufacturer title
-   */
-  public String manufacturer;
+    /**
+     * The BIOS description
+     */
+    public String description;
 
-  /**
-   * The BIOS description
-   */
-  public String description;
+    /**
+     * The BIOS version number
+     */
+    public String version;
 
-  /**
-   * The BIOS version number
-   */
-  public String version;
+    /**
+     * The BIOS revision number
+     */
+    public String revision;
 
-  /**
-   * The BIOS revision number
-   */
-  public String revision;
+    /**
+     * The BIOS release date
+     */
+    public String releaseDate;
 
-  /**
-   * The BIOS release date
-   */
-  public String releaseDate;
+    @Override
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  public String getName() {
-    return name;
-  }
+    @Override
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-  @Override
-  public String getManufacturer() {
-    return manufacturer;
-  }
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-  @Override
-  public String getDescription() {
-    return description;
-  }
+    @Override
+    public String getVersion() {
+        return version;
+    }
 
-  @Override
-  public String getVersion() {
-    return version;
-  }
+    @Override
+    public String getRevision() {
+        return revision;
+    }
 
-  @Override
-  public String getRevision() {
-    return revision;
-  }
+    @Override
+    public String getReleaseDate() {
+        return releaseDate;
+    }
 
-  @Override
-  public String getReleaseDate() {
-    return releaseDate;
-  }
+    public void attach(ComponentDriver driver) {
+        this.driver = driver;
+        // Query all constant attributes:
+        driver.query(FirmwareAttributeEnum.NAME);
+        driver.query(FirmwareAttributeEnum.MANUFACTURER);
+        driver.query(FirmwareAttributeEnum.DESCRIPTION);
+        driver.query(FirmwareAttributeEnum.VERSION);
+        driver.query(FirmwareAttributeEnum.REVISION);
+        driver.query(FirmwareAttributeEnum.RELEASE_DATE);
+    }
 
-  public void attach(ComponentDriver driver) {
-    this.driver = driver;
-    // Query all constant attributes:
-    driver.query(FirmwareAttribute.NAME);
-    driver.query(FirmwareAttribute.MANUFACTURER);
-    driver.query(FirmwareAttribute.DESCRIPTION);
-    driver.query(FirmwareAttribute.VERSION);
-    driver.query(FirmwareAttribute.REVISION);
-    driver.query(FirmwareAttribute.RELEASE_DATE);
-  }
+    @Override
+    public <T> T get(AttributeKey<T> key) {
+        switch ((FirmwareAttributeEnum) key.getAttributeEnum()) {
+        default:
+            return null;
+        case NAME:
+            return (T) name;
+        case MANUFACTURER:
+            return (T) manufacturer;
+        case DESCRIPTION:
+            return (T) description;
+        case VERSION:
+            return (T) version;
+        case REVISION:
+            return (T) revision;
+        case RELEASE_DATE:
+            return (T) releaseDate;
+        }
+    }
 }

@@ -28,5 +28,5 @@ import javax.annotation.processing.Generated;
 
 @Generated("oshi.ApiGenerator")
 public interface FirmwareLinux extends Firmware {
-  Boolean getUefi();
+    Boolean getUefi();
 }

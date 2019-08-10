@@ -23,6 +23,12 @@
  */
 package oshi.example;
 
+import static oshi.api.hardware.nic.NicAttribute.IPV4;
+import static oshi.api.hardware.nic.NicAttribute.LINK_SPEED;
+import static oshi.api.hardware.nic.NicAttribute.MTU;
+import static oshi.api.hardware.nic.NicAttribute.READ_BYTES;
+import static oshi.api.hardware.nic.NicAttribute.WRITE_BYTES;
+
 import java.util.Arrays;
 
 import oshi.api.OSHI;
@@ -30,16 +36,24 @@ import oshi.api.OSHI;
 public class NicExample {
 
     public static void main(String[] args) throws Exception {
+        example1();
+    }
 
-        OSHI.getLinuxSystem().getNicStream().forEach(nic -> {
+    private static void example1() {
+        System.out.println("Cross-platform usage that makes one query");
+
+        OSHI.getSystem().getNicStream().forEach(nic -> {
+            nic.query(READ_BYTES, WRITE_BYTES, MTU, IPV4, LINK_SPEED);
+
             System.out.println("NIC: " + nic.getName());
-            System.out.println("\tReadBytes: " + nic.queryReadBytes());
-            System.out.println("\tWriteBytes: " + nic.queryWriteBytes());
-            System.out.println("\tMTU: " + nic.queryMtu());
-            System.out.println("\tIPv4: " + Arrays.toString(nic.queryIpv4()));
-            System.out.println("\tLink Speed: " + nic.queryLinkSpeed());
+            System.out.println("\tReadBytes: " + nic.getReadBytes());
+            System.out.println("\tWriteBytes: " + nic.getWriteBytes());
+            System.out.println("\tMTU: " + nic.getMtu());
+            System.out.println("\tIPv4: " + Arrays.toString(nic.getIpv4()));
+            System.out.println("\tLink Speed: " + nic.getLinkSpeed());
         });
 
+        System.out.println();
     }
 
 }

@@ -24,21 +24,35 @@
 package oshi.example;
 
 import oshi.api.OSHI;
+import oshi.api.hardware.firmware.Firmware;
+import oshi.api.hardware.firmware.FirmwareLinux;
 
 public class FirmwareExample {
 
     public static void main(String[] args) {
+        example1();
+        example2();
+    }
 
-        var firmware = OSHI.getSystem().getFirmware();
-        System.out.println("=== CrossPlatform Firmware ===");
+    private static void example1() {
+        System.out.println("Cross-platform access");
+
+        Firmware firmware = OSHI.getSystem().getFirmware();
         System.out.println("Name: " + firmware.getName());
         System.out.println("Description: " + firmware.getDescription());
         System.out.println("Version: " + firmware.getVersion());
         System.out.println("Revision: " + firmware.getRevision());
         System.out.println("Release: " + firmware.getReleaseDate());
 
-        var linuxFirmware = OSHI.getLinuxSystem().getFirmware();
-        System.out.println("=== Linux Firmware ===");
-        System.out.println("UEFI support: " + linuxFirmware.getUefi());
+        System.out.println();
+    }
+
+    private static void example2() {
+        System.out.println("Platform-specific access");
+
+        FirmwareLinux firmware = OSHI.getLinuxSystem().getFirmware();
+        System.out.println("UEFI support: " + firmware.getUefi());
+
+        System.out.println();
     }
 }

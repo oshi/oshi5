@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.driver.system;
 
 import java.util.stream.Stream;
 
-import oshi.api.FreeBsdSystem;
-import oshi.api.hardware.disk.DiskFreeBsd;
-import oshi.api.hardware.firmware.FirmwareFreeBsd;
-import oshi.api.hardware.nic.NicFreeBsd;
+import oshi.api.MacSystem;
+import oshi.api.hardware.disk.DiskMac;
+import oshi.api.hardware.firmware.FirmwareMac;
+import oshi.api.hardware.nic.NicMac;
 
-public class SystemDriverFreeBsd implements FreeBsdSystem {
+public class SystemDriverMac implements MacSystem {
 
     @Override
-    public Stream<NicFreeBsd> getNicStream() {
+    public Stream<NicMac> getNicStream() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Stream<DiskFreeBsd> getDiskStream() {
+    public Stream<DiskMac> getDiskStream() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public FirmwareFreeBsd getFirmware() {
+    public FirmwareMac getFirmware() {
         // TODO Auto-generated method stub
         return null;
     }

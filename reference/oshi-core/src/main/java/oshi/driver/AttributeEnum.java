@@ -23,31 +23,18 @@
  */
 package oshi.driver;
 
-import java.util.stream.Stream;
+import oshi.api.AttributeKey;
 
-import oshi.api.SolarisSystem;
-import oshi.api.hardware.disk.DiskSolaris;
-import oshi.api.hardware.firmware.FirmwareSolaris;
-import oshi.api.hardware.nic.NicSolaris;
-
-public class SystemDriverSolaris implements SolarisSystem {
-
-    @Override
-    public Stream<NicSolaris> getNicStream() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Stream<DiskSolaris> getDiskStream() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FirmwareSolaris getFirmware() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+/**
+ * This interface marks a generated {@code enum} as an attribute-enum (which
+ * contains a constant for every attribute in a component). All
+ * {@link AttributeEnum}s are wrapped by {@link AttributeKey}s for use by the
+ * user.<br>
+ * <br>
+ * {@link AttributeEnum}s are primarily used to associate annotated query
+ * methods within driver classes to attributes.
+ * 
+ * @see {@link AttributeKey}
+ */
+public interface AttributeEnum {
 }

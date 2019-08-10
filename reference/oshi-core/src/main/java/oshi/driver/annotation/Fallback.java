@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.driver.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -29,8 +29,25 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates that the annotated query method be preferred over the query
+ * method(s) in the targeted class for the same attributes.
+ */
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface Fallback {
+
+    /**
+     * Get the fallback class.
+     * 
+     * @return The class that contains the fallback method
+     */
     public Class<?> value();
+
+    /**
+     * Get the name of the fallback method for use with reflection.
+     * 
+     * @return The explicit name of the fallback method
+     */
+    public String method() default "";
 }

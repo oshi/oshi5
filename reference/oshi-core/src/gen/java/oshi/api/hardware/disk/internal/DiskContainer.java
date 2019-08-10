@@ -26,478 +26,556 @@ package oshi.api.hardware.disk.internal;
 
 import java.lang.Override;
 import javax.annotation.processing.Generated;
+import oshi.api.AttributeKey;
 import oshi.api.DetachedContainerException;
 import oshi.api.hardware.disk.Disk;
+import oshi.api.internal.AbstractContainer;
 import oshi.driver.ComponentDriver;
 
 /**
  * A storage device
  */
 @Generated("oshi.ApiGenerator")
-public abstract class DiskContainer implements Disk {
-  private transient ComponentDriver driver;
+public abstract class DiskContainer extends AbstractContainer implements Disk {
+    public String name;
 
-  public String name;
+    public String path;
 
-  public String model;
+    public String model;
 
-  public String serial;
+    public String serial;
 
-  /**
-   * The disk's total size in bytes
-   */
-  public Long size;
+    /**
+     * The disk's total size in bytes
+     */
+    public Long size;
 
-  public Long reads;
+    public Long reads;
 
-  public Long readBytes;
+    public Long readBytes;
 
-  public Long writes;
+    public Long writes;
 
-  public Long writeBytes;
+    public Long writeBytes;
 
-  public Long queueLength;
+    public Long queueLength;
 
-  public Long transferTime;
+    public Long transferTime;
 
-  public String modelFamily;
+    public String modelFamily;
 
-  public String firmwareVersion;
+    public String firmwareVersion;
 
-  public Long rotationRate;
+    public Long rotationRate;
 
-  public Long readErrorRate;
+    public Long readErrorRate;
 
-  public Long spinUpTime;
+    public Long spinUpTime;
 
-  public Long startStopCycles;
+    public Long startStopCycles;
 
-  public Long reallocatedSectors;
+    public Long reallocatedSectors;
 
-  public Long seekErrorRate;
+    public Long seekErrorRate;
 
-  public Long powerOnTime;
+    public Long powerOnTime;
 
-  public Long spinRetries;
+    public Long spinRetries;
 
-  public Long calibrationRetries;
+    public Long calibrationRetries;
 
-  public Long powerCycles;
+    public Long powerCycles;
 
-  public Long poweroffRetracts;
+    public Long poweroffRetracts;
 
-  public Long loadCycles;
+    public Long loadCycles;
 
-  public Long temperature;
+    public Long temperature;
 
-  public Long reallocatedEvents;
+    public Long reallocatedEvents;
 
-  public Long currentPendingSector;
+    public Long currentPendingSector;
 
-  public Long offlineUncorrectable;
+    public Long offlineUncorrectable;
 
-  public Long crcErrors;
+    public Long crcErrors;
 
-  public Long multizoneErrorRate;
+    public Long multizoneErrorRate;
 
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public String getModel() {
-    return model;
-  }
-
-  @Override
-  public String getSerial() {
-    return serial;
-  }
-
-  @Override
-  public Long getSize() {
-    return size;
-  }
-
-  @Override
-  public Long querySize() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getName() {
+        return name;
     }
-    driver.query(DiskAttribute.SIZE);
-    return size;
-  }
 
-  @Override
-  public Long getReads() {
-    return reads;
-  }
-
-  @Override
-  public Long queryReads() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getPath() {
+        return path;
     }
-    driver.query(DiskAttribute.READS);
-    return reads;
-  }
 
-  @Override
-  public Long getReadBytes() {
-    return readBytes;
-  }
-
-  @Override
-  public Long queryReadBytes() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getModel() {
+        return model;
     }
-    driver.query(DiskAttribute.READ_BYTES);
-    return readBytes;
-  }
 
-  @Override
-  public Long getWrites() {
-    return writes;
-  }
-
-  @Override
-  public Long queryWrites() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getSerial() {
+        return serial;
     }
-    driver.query(DiskAttribute.WRITES);
-    return writes;
-  }
 
-  @Override
-  public Long getWriteBytes() {
-    return writeBytes;
-  }
-
-  @Override
-  public Long queryWriteBytes() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getSize() {
+        return size;
     }
-    driver.query(DiskAttribute.WRITE_BYTES);
-    return writeBytes;
-  }
 
-  @Override
-  public Long getQueueLength() {
-    return queueLength;
-  }
-
-  @Override
-  public Long queryQueueLength() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long querySize() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.SIZE);
+        return size;
     }
-    driver.query(DiskAttribute.QUEUE_LENGTH);
-    return queueLength;
-  }
 
-  @Override
-  public Long getTransferTime() {
-    return transferTime;
-  }
-
-  @Override
-  public Long queryTransferTime() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getReads() {
+        return reads;
     }
-    driver.query(DiskAttribute.TRANSFER_TIME);
-    return transferTime;
-  }
 
-  @Override
-  public String getModelFamily() {
-    return modelFamily;
-  }
-
-  @Override
-  public String queryModelFamily() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryReads() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.READS);
+        return reads;
     }
-    driver.query(DiskAttribute.MODEL_FAMILY);
-    return modelFamily;
-  }
 
-  @Override
-  public String getFirmwareVersion() {
-    return firmwareVersion;
-  }
-
-  @Override
-  public String queryFirmwareVersion() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getReadBytes() {
+        return readBytes;
     }
-    driver.query(DiskAttribute.FIRMWARE_VERSION);
-    return firmwareVersion;
-  }
 
-  @Override
-  public Long getRotationRate() {
-    return rotationRate;
-  }
-
-  @Override
-  public Long queryRotationRate() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryReadBytes() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.READ_BYTES);
+        return readBytes;
     }
-    driver.query(DiskAttribute.ROTATION_RATE);
-    return rotationRate;
-  }
 
-  @Override
-  public Long getReadErrorRate() {
-    return readErrorRate;
-  }
-
-  @Override
-  public Long queryReadErrorRate() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getWrites() {
+        return writes;
     }
-    driver.query(DiskAttribute.READ_ERROR_RATE);
-    return readErrorRate;
-  }
 
-  @Override
-  public Long getSpinUpTime() {
-    return spinUpTime;
-  }
-
-  @Override
-  public Long querySpinUpTime() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryWrites() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.WRITES);
+        return writes;
     }
-    driver.query(DiskAttribute.SPIN_UP_TIME);
-    return spinUpTime;
-  }
 
-  @Override
-  public Long getStartStopCycles() {
-    return startStopCycles;
-  }
-
-  @Override
-  public Long queryStartStopCycles() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getWriteBytes() {
+        return writeBytes;
     }
-    driver.query(DiskAttribute.START_STOP_CYCLES);
-    return startStopCycles;
-  }
 
-  @Override
-  public Long getReallocatedSectors() {
-    return reallocatedSectors;
-  }
-
-  @Override
-  public Long queryReallocatedSectors() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryWriteBytes() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.WRITE_BYTES);
+        return writeBytes;
     }
-    driver.query(DiskAttribute.REALLOCATED_SECTORS);
-    return reallocatedSectors;
-  }
 
-  @Override
-  public Long getSeekErrorRate() {
-    return seekErrorRate;
-  }
-
-  @Override
-  public Long querySeekErrorRate() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getQueueLength() {
+        return queueLength;
     }
-    driver.query(DiskAttribute.SEEK_ERROR_RATE);
-    return seekErrorRate;
-  }
 
-  @Override
-  public Long getPowerOnTime() {
-    return powerOnTime;
-  }
-
-  @Override
-  public Long queryPowerOnTime() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryQueueLength() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.QUEUE_LENGTH);
+        return queueLength;
     }
-    driver.query(DiskAttribute.POWER_ON_TIME);
-    return powerOnTime;
-  }
 
-  @Override
-  public Long getSpinRetries() {
-    return spinRetries;
-  }
-
-  @Override
-  public Long querySpinRetries() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getTransferTime() {
+        return transferTime;
     }
-    driver.query(DiskAttribute.SPIN_RETRIES);
-    return spinRetries;
-  }
 
-  @Override
-  public Long getCalibrationRetries() {
-    return calibrationRetries;
-  }
-
-  @Override
-  public Long queryCalibrationRetries() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryTransferTime() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.TRANSFER_TIME);
+        return transferTime;
     }
-    driver.query(DiskAttribute.CALIBRATION_RETRIES);
-    return calibrationRetries;
-  }
 
-  @Override
-  public Long getPowerCycles() {
-    return powerCycles;
-  }
-
-  @Override
-  public Long queryPowerCycles() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getModelFamily() {
+        return modelFamily;
     }
-    driver.query(DiskAttribute.POWER_CYCLES);
-    return powerCycles;
-  }
 
-  @Override
-  public Long getPoweroffRetracts() {
-    return poweroffRetracts;
-  }
-
-  @Override
-  public Long queryPoweroffRetracts() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String queryModelFamily() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.MODEL_FAMILY);
+        return modelFamily;
     }
-    driver.query(DiskAttribute.POWEROFF_RETRACTS);
-    return poweroffRetracts;
-  }
 
-  @Override
-  public Long getLoadCycles() {
-    return loadCycles;
-  }
-
-  @Override
-  public Long queryLoadCycles() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String getFirmwareVersion() {
+        return firmwareVersion;
     }
-    driver.query(DiskAttribute.LOAD_CYCLES);
-    return loadCycles;
-  }
 
-  @Override
-  public Long getTemperature() {
-    return temperature;
-  }
-
-  @Override
-  public Long queryTemperature() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public String queryFirmwareVersion() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.FIRMWARE_VERSION);
+        return firmwareVersion;
     }
-    driver.query(DiskAttribute.TEMPERATURE);
-    return temperature;
-  }
 
-  @Override
-  public Long getReallocatedEvents() {
-    return reallocatedEvents;
-  }
-
-  @Override
-  public Long queryReallocatedEvents() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getRotationRate() {
+        return rotationRate;
     }
-    driver.query(DiskAttribute.REALLOCATED_EVENTS);
-    return reallocatedEvents;
-  }
 
-  @Override
-  public Long getCurrentPendingSector() {
-    return currentPendingSector;
-  }
-
-  @Override
-  public Long queryCurrentPendingSector() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryRotationRate() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.ROTATION_RATE);
+        return rotationRate;
     }
-    driver.query(DiskAttribute.CURRENT_PENDING_SECTOR);
-    return currentPendingSector;
-  }
 
-  @Override
-  public Long getOfflineUncorrectable() {
-    return offlineUncorrectable;
-  }
-
-  @Override
-  public Long queryOfflineUncorrectable() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getReadErrorRate() {
+        return readErrorRate;
     }
-    driver.query(DiskAttribute.OFFLINE_UNCORRECTABLE);
-    return offlineUncorrectable;
-  }
 
-  @Override
-  public Long getCrcErrors() {
-    return crcErrors;
-  }
-
-  @Override
-  public Long queryCrcErrors() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long queryReadErrorRate() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.READ_ERROR_RATE);
+        return readErrorRate;
     }
-    driver.query(DiskAttribute.CRC_ERRORS);
-    return crcErrors;
-  }
 
-  @Override
-  public Long getMultizoneErrorRate() {
-    return multizoneErrorRate;
-  }
-
-  @Override
-  public Long queryMultizoneErrorRate() {
-    if (driver == null) {
-      throw new DetachedContainerException();
+    @Override
+    public Long getSpinUpTime() {
+        return spinUpTime;
     }
-    driver.query(DiskAttribute.MULTIZONE_ERROR_RATE);
-    return multizoneErrorRate;
-  }
 
-  public void attach(ComponentDriver driver) {
-    this.driver = driver;
-    // Query all constant attributes:
-    driver.query(DiskAttribute.NAME);
-    driver.query(DiskAttribute.MODEL);
-    driver.query(DiskAttribute.SERIAL);
-  }
+    @Override
+    public Long querySpinUpTime() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.SPIN_UP_TIME);
+        return spinUpTime;
+    }
+
+    @Override
+    public Long getStartStopCycles() {
+        return startStopCycles;
+    }
+
+    @Override
+    public Long queryStartStopCycles() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.START_STOP_CYCLES);
+        return startStopCycles;
+    }
+
+    @Override
+    public Long getReallocatedSectors() {
+        return reallocatedSectors;
+    }
+
+    @Override
+    public Long queryReallocatedSectors() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.REALLOCATED_SECTORS);
+        return reallocatedSectors;
+    }
+
+    @Override
+    public Long getSeekErrorRate() {
+        return seekErrorRate;
+    }
+
+    @Override
+    public Long querySeekErrorRate() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.SEEK_ERROR_RATE);
+        return seekErrorRate;
+    }
+
+    @Override
+    public Long getPowerOnTime() {
+        return powerOnTime;
+    }
+
+    @Override
+    public Long queryPowerOnTime() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.POWER_ON_TIME);
+        return powerOnTime;
+    }
+
+    @Override
+    public Long getSpinRetries() {
+        return spinRetries;
+    }
+
+    @Override
+    public Long querySpinRetries() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.SPIN_RETRIES);
+        return spinRetries;
+    }
+
+    @Override
+    public Long getCalibrationRetries() {
+        return calibrationRetries;
+    }
+
+    @Override
+    public Long queryCalibrationRetries() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.CALIBRATION_RETRIES);
+        return calibrationRetries;
+    }
+
+    @Override
+    public Long getPowerCycles() {
+        return powerCycles;
+    }
+
+    @Override
+    public Long queryPowerCycles() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.POWER_CYCLES);
+        return powerCycles;
+    }
+
+    @Override
+    public Long getPoweroffRetracts() {
+        return poweroffRetracts;
+    }
+
+    @Override
+    public Long queryPoweroffRetracts() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.POWEROFF_RETRACTS);
+        return poweroffRetracts;
+    }
+
+    @Override
+    public Long getLoadCycles() {
+        return loadCycles;
+    }
+
+    @Override
+    public Long queryLoadCycles() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.LOAD_CYCLES);
+        return loadCycles;
+    }
+
+    @Override
+    public Long getTemperature() {
+        return temperature;
+    }
+
+    @Override
+    public Long queryTemperature() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.TEMPERATURE);
+        return temperature;
+    }
+
+    @Override
+    public Long getReallocatedEvents() {
+        return reallocatedEvents;
+    }
+
+    @Override
+    public Long queryReallocatedEvents() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.REALLOCATED_EVENTS);
+        return reallocatedEvents;
+    }
+
+    @Override
+    public Long getCurrentPendingSector() {
+        return currentPendingSector;
+    }
+
+    @Override
+    public Long queryCurrentPendingSector() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.CURRENT_PENDING_SECTOR);
+        return currentPendingSector;
+    }
+
+    @Override
+    public Long getOfflineUncorrectable() {
+        return offlineUncorrectable;
+    }
+
+    @Override
+    public Long queryOfflineUncorrectable() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.OFFLINE_UNCORRECTABLE);
+        return offlineUncorrectable;
+    }
+
+    @Override
+    public Long getCrcErrors() {
+        return crcErrors;
+    }
+
+    @Override
+    public Long queryCrcErrors() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.CRC_ERRORS);
+        return crcErrors;
+    }
+
+    @Override
+    public Long getMultizoneErrorRate() {
+        return multizoneErrorRate;
+    }
+
+    @Override
+    public Long queryMultizoneErrorRate() {
+        if (driver == null) {
+            throw new DetachedContainerException();
+        }
+        driver.query(DiskAttributeEnum.MULTIZONE_ERROR_RATE);
+        return multizoneErrorRate;
+    }
+
+    public void attach(ComponentDriver driver) {
+        this.driver = driver;
+        // Query all constant attributes:
+        driver.query(DiskAttributeEnum.NAME);
+        driver.query(DiskAttributeEnum.PATH);
+        driver.query(DiskAttributeEnum.MODEL);
+        driver.query(DiskAttributeEnum.SERIAL);
+    }
+
+    @Override
+    public <T> T get(AttributeKey<T> key) {
+        switch ((DiskAttributeEnum) key.getAttributeEnum()) {
+        default:
+            return null;
+        case NAME:
+            return (T) name;
+        case PATH:
+            return (T) path;
+        case MODEL:
+            return (T) model;
+        case SERIAL:
+            return (T) serial;
+        case SIZE:
+            return (T) size;
+        case READS:
+            return (T) reads;
+        case READ_BYTES:
+            return (T) readBytes;
+        case WRITES:
+            return (T) writes;
+        case WRITE_BYTES:
+            return (T) writeBytes;
+        case QUEUE_LENGTH:
+            return (T) queueLength;
+        case TRANSFER_TIME:
+            return (T) transferTime;
+        case MODEL_FAMILY:
+            return (T) modelFamily;
+        case FIRMWARE_VERSION:
+            return (T) firmwareVersion;
+        case ROTATION_RATE:
+            return (T) rotationRate;
+        case READ_ERROR_RATE:
+            return (T) readErrorRate;
+        case SPIN_UP_TIME:
+            return (T) spinUpTime;
+        case START_STOP_CYCLES:
+            return (T) startStopCycles;
+        case REALLOCATED_SECTORS:
+            return (T) reallocatedSectors;
+        case SEEK_ERROR_RATE:
+            return (T) seekErrorRate;
+        case POWER_ON_TIME:
+            return (T) powerOnTime;
+        case SPIN_RETRIES:
+            return (T) spinRetries;
+        case CALIBRATION_RETRIES:
+            return (T) calibrationRetries;
+        case POWER_CYCLES:
+            return (T) powerCycles;
+        case POWEROFF_RETRACTS:
+            return (T) poweroffRetracts;
+        case LOAD_CYCLES:
+            return (T) loadCycles;
+        case TEMPERATURE:
+            return (T) temperature;
+        case REALLOCATED_EVENTS:
+            return (T) reallocatedEvents;
+        case CURRENT_PENDING_SECTOR:
+            return (T) currentPendingSector;
+        case OFFLINE_UNCORRECTABLE:
+            return (T) offlineUncorrectable;
+        case CRC_ERRORS:
+            return (T) crcErrors;
+        case MULTIZONE_ERROR_RATE:
+            return (T) multizoneErrorRate;
+        }
+    }
 }

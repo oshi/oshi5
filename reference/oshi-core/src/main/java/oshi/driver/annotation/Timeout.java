@@ -21,33 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.driver.annotation;
 
-import java.util.stream.Stream;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import oshi.api.WindowsSystem;
-import oshi.api.hardware.disk.DiskWindows;
-import oshi.api.hardware.firmware.FirmwareWindows;
-import oshi.api.hardware.nic.NicWindows;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-public class SystemDriverWindows implements WindowsSystem {
+import oshi.driver.QueryStatus;
 
-    @Override
-    public Stream<NicWindows> getNicStream() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+/**
+ * Indicates that the annotated query method should be allowed the given amount
+ * of time to execute before it's cancelled. A cancelled query method will have
+ * a result of {@link QueryStatus#TIMEOUT}.
+ */
+@Retention(RUNTIME)
+@Target(METHOD)
+public @interface Timeout {
 
-    @Override
-    public Stream<DiskWindows> getDiskStream() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    /**
+     * Return the timeout identifier which will be used to find the explicit
+     * timeout value.
+     * 
+     * @return The timeout identifier or "class"
+     */
+    public String value() default "";
 
-    @Override
-    public FirmwareWindows getFirmware() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+    /**
+     * Return the query timeout.
+     * 
+     * @return The timeout in milliseconds
+     */
+    public int milliseconds() default 0;
 }

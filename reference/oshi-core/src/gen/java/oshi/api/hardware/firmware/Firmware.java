@@ -25,18 +25,19 @@
 package oshi.api.hardware.firmware;
 
 import javax.annotation.processing.Generated;
+import oshi.api.Container;
 
 @Generated("oshi.ApiGenerator")
-public interface Firmware {
-  String getName();
+public interface Firmware extends Container {
+    String getName();
 
-  String getManufacturer();
+    String getManufacturer();
 
-  String getDescription();
+    String getDescription();
 
-  String getVersion();
+    String getVersion();
 
-  String getRevision();
+    String getRevision();
 
-  String getReleaseDate();
+    String getReleaseDate();
 }

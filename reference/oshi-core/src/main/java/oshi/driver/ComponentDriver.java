@@ -26,115 +26,173 @@ package oshi.driver;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import oshi.driver.annotation.Fallback;
 
 /**
  * A {@link ComponentDriver} is the root of the driver hierarchy. Containers can
- * call {@link #query(Enum)} or {@link #queryAll()} to have this class update
- * their state. There is a one-to-one correspondence between
+ * call {@link #query(AttributeEnum)} or {@link #queryAll()} to have this class
+ * update their state. There is a one-to-one correspondence between
  * {@link ComponentDriver}s and container objects.<br>
  * <br>
  * This class automatically registers all query methods in its subclasses. Query
  * methods in {@link ExtensionDriver}s can also be registered with
  * {@link #register(ExtensionDriver)}.
  */
-public class ComponentDriver {
+public abstract class ComponentDriver {
 
+    private static final Logger log = LoggerFactory.getLogger(ComponentDriver.class);
+
+    /**
+     * This class wraps a query method's {@link MethodHandle} with additional
+     * metadata that's useful for ordering query handles within a
+     * {@link QueryStack}.<br>
+     * <br>
+     * 
+     * Note: this class has a natural ordering that is inconsistent with equals.
+     */
     private static final class QueryHandle implements Comparable<QueryHandle> {
+
+        /**
+         * A handle on the method that performs the query.
+         */
         public MethodHandle handle;
+
+        /**
+         * A fallback annotation for query ordering.
+         */
         public Fallback fallback;
+
+        /**
+         * The class that contributed this query handle.
+         */
         public Class<?> cls;
 
-        public QueryHandle(MethodHandle handle, Fallback fallback, Class<?> cls) {
-            this.handle = handle;
-            this.fallback = fallback;
-            this.cls = cls;
+        /**
+         * The method name of the query method.
+         */
+        public String name;
+
+        public QueryHandle(MethodHandle handle, Class<?> cls, Method method) {
+            this.handle = Objects.requireNonNull(handle);
+            this.cls = Objects.requireNonNull(cls);
+            this.name = method.getName();
+            this.fallback = method.getAnnotation(Fallback.class);
         }
 
         @Override
-        public int compareTo(QueryHandle o) {
-            // TODO implement query ordering with fallbacks
+        public int compareTo(QueryHandle other) {
+            if (this == other)
+                return 0;
+
+            if (this.fallback != null) {
+                if (this.fallback.value() == other.cls) {
+                    if (this.fallback.method() != null) {
+                        if (this.fallback.method().equals(other.name)) {
+                            return -1;
+                        }
+                    } else {
+                        return -1;
+                    }
+                }
+            } else if (other.fallback != null) {
+                if (other.fallback.value() == this.cls) {
+                    if (other.fallback.method() != null) {
+                        if (other.fallback.method().equals(this.name)) {
+                            return +1;
+                        }
+                    } else {
+                        return +1;
+                    }
+                }
+            }
+
+            // No ordering preference
             return 0;
         }
     }
 
     /**
-     * An association between attribute enums and lists of query handles in
-     * descending priority order. A particular query handle can exist in
-     * multiple lists, but not more than once in each list.
+     * A {@link QueryStack} is a collection of {@link QueryHandle}s that are
+     * invoked sequentially upon query. A query attempt always begins with the
+     * top handle and continues down the stack until a handle succeeds. The
+     * stack can be configured to pop failed query handles if they are unlikely
+     * to ever succeed.
      */
-    private Map<Enum<?>, List<QueryHandle>> handles;
+    private static final class QueryStack extends ArrayList<QueryHandle> {
+    }
+
+    /**
+     * An association between attribute-enums and query stacks (lists of query
+     * handles in descending priority order). A particular query handle can
+     * exist in multiple stacks, but not more than once in each.
+     */
+    private Map<AttributeEnum, QueryStack> handles;
 
     /**
      * A list of extensions in case they are needed in the future.
      */
     private List<ExtensionDriver> extensions;
 
-    public ComponentDriver() {
+    public void initialize(List<ExtensionDriver> extensions) {
+        if (this.handles != null || this.extensions != null)
+            throw new IllegalArgumentException("The driver has already been initialized");
+
+        this.extensions = Objects.requireNonNull(extensions);
         this.handles = new HashMap<>();
-        this.extensions = new LinkedList<>();
 
         registerDriver(this);
+        this.extensions.forEach(this::registerDriver);
+
+        // Reorder each stack
+        handles.values().forEach(Collections::sort);
     }
 
     /**
-     * Query the driver hierarchy for the value of the attribute corresponding
-     * to the given enum.
+     * Query the driver hierarchy for the value of the attributes corresponding
+     * to the given enums.
      * 
-     * @param attribute
-     *            The attribute enum of the attribute to query
+     * @param attributes
+     *            The attribute enums of the attributes to query
      */
-    public void query(Enum<?> attribute) {
-
-        var h = handles.get(attribute);
-        if (h == null) {
-            // TODO
-        }
-
-        for (var t : h) {
-            try {
-                t.handle.invoke();
-                return;
-            } catch (Throwable e) {
-                // TODO log exception and continue
-                continue;
-            }
-        }
+    public void query(AttributeEnum... attributes) {
+        Arrays.stream(attributes).map(handles::get).distinct().forEach(this::query);
     }
 
     /**
      * Query every attribute in the driver hierarchy.
      */
     public void queryAll() {
-        // Keep track of the handles that have been queried to prevent repeats
-        var queried = new HashSet<MethodHandle>();
-        for (var handleList : handles.values()) {
-            for (var h : handleList) {
-                if (queried.contains(h.handle))
-                    break;
-
-                queried.add(h.handle);
-                try {
-                    h.handle.invoke();
-                    break;
-                } catch (Throwable e) {
-                    // TODO log exception and continue
-                    continue;
-                }
-            }
-        }
+        handles.values().stream().distinct().forEach(this::query);
     }
 
-    public void register(ExtensionDriver driver) {
-        registerDriver(driver);
-        extensions.add(driver);
+    private void query(QueryStack stack) {
+        if (stack == null)
+            // TODO
+            return;
+
+        for (var queryHandle : stack) {
+            try {
+                queryHandle.handle.invoke();
+                return;
+            } catch (Throwable e) {
+                // TODO log exception and continue
+                // TODO remove if configured
+                e.printStackTrace();
+                continue;
+            }
+        }
     }
 
     /**
@@ -152,38 +210,35 @@ public class ComponentDriver {
                 // Build a list of attributes defined in the annotations
                 var attributes = Arrays.stream(m.getDeclaredAnnotations()).flatMap(annotation -> {
                     try {
-                        return Arrays.stream((Enum<?>[]) annotation.getClass().getMethod("value").invoke(annotation));
+                        return Arrays
+                                .stream((AttributeEnum[]) annotation.getClass().getMethod("value").invoke(annotation));
                     } catch (NoSuchMethodException e) {
                         // Not the annotation we're looking for
-                        return Arrays.stream(new Enum<?>[0]);
+                        return Arrays.stream(new AttributeEnum[0]);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException("Failed to read query annotation", e);
                     }
                 }).collect(Collectors.toList());
 
                 if (attributes.size() > 0) {
-                    // Build method handle
+                    // Build query handle
                     try {
                         m.setAccessible(true);
-                        var handle = MethodHandles.lookup().unreflect(m).bindTo(driver);
+                        var handle = new QueryHandle(MethodHandles.lookup().unreflect(m).bindTo(driver), driverClass,
+                                m);
+                        var stack = new QueryStack();
+                        stack.add(handle);
 
                         for (var attribute : attributes) {
-                            if (!handles.containsKey(attribute)) {
-                                handles.put(attribute, new LinkedList<>());
-                            }
-                            handles.get(attribute)
-                                    .add(new QueryHandle(handle, m.getAnnotation(Fallback.class), driverClass));
+                            handles.put(attribute, stack);
                         }
                     } catch (IllegalAccessException e) {
-                        throw new RuntimeException("Cannot access query method: " + m.getName());
+                        throw new RuntimeException("Cannot access query method: " + m.getName(), e);
                     }
                 }
             }
 
             driverClass = driverClass.getSuperclass();
         }
-
-        // Reorder each stack
-        handles.values().forEach(Collections::sort);
     }
 }

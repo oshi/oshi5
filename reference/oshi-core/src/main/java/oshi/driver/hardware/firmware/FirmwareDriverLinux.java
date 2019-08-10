@@ -23,28 +23,18 @@
  */
 package oshi.driver.hardware.firmware;
 
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.DESCRIPTION;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.MANUFACTURER;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.NAME;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.RELEASE_DATE;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.REVISION;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.UEFI;
-import static oshi.api.hardware.firmware.internal.FirmwareAttribute.VERSION;
+import static oshi.api.hardware.firmware.internal.FirmwareAttributeEnum.*;
 
 import oshi.api.hardware.firmware.internal.FirmwareContainerLinux;
 import oshi.api.hardware.firmware.internal.FirmwareQuery;
 import oshi.driver.ComponentDriver;
-import oshi.driver.RequiresRoot;
+import oshi.driver.annotation.RequiresRoot;
 import oshi.old.ExecutingCommand;
 import oshi.old.FileUtil;
 
 public class FirmwareDriverLinux extends ComponentDriver {
 
     private FirmwareContainerLinux container;
-
-    public FirmwareDriverLinux(FirmwareContainerLinux container) {
-        this.container = container;
-    }
 
     private static final String SYSFS_SERIAL_PATH = "/sys/devices/virtual/dmi/id/";
 

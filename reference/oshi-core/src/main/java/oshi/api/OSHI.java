@@ -25,15 +25,30 @@ package oshi.api;
 
 import com.sun.jna.Platform;
 
-import oshi.driver.SystemDriver;
-import oshi.driver.SystemDriverFreeBsd;
-import oshi.driver.SystemDriverLinux;
-import oshi.driver.SystemDriverMac;
-import oshi.driver.SystemDriverSolaris;
-import oshi.driver.SystemDriverWindows;
+import oshi.driver.system.SystemDriverFreeBsd;
+import oshi.driver.system.SystemDriverLinux;
+import oshi.driver.system.SystemDriverMac;
+import oshi.driver.system.SystemDriverSolaris;
+import oshi.driver.system.SystemDriverWindows;
 
 /**
+ * This factory class is used to build disposable {@link MultiSystem} instances
+ * that can be used to access everything in OSHI.<br>
+ * <br>
+ * Most users should call {@link #getSystem()} for a fully cross-platform handle
+ * on the system. If platform-specific features are desired, one of the
+ * platform-unsafe methods can be called instead (at your own risk).<br>
+ * <br>
  * 
+ * For example, typical usage is as follows:
+ * 
+ * <pre>
+ * Firmware firmware = OSHI.getSystem().getFirmware();
+ * ...
+ * 
+ * LinuxFirmware firmware = OSHI.getLinuxSystem().getFirmware();
+ * ...
+ * </pre>
  */
 public final class OSHI {
 
@@ -73,15 +88,15 @@ public final class OSHI {
     public static MultiSystem getSystem() {
         switch (PLATFORM) {
         case FREEBSD:
-            return new SystemDriver(new SystemDriverFreeBsd());
+            return new SystemDriverFreeBsd();
         case LINUX:
-            return new SystemDriver(new SystemDriverLinux());
+            return new SystemDriverLinux();
         case MACOSX:
-            return new SystemDriver(new SystemDriverMac());
+            return new SystemDriverMac();
         case SOLARIS:
-            return new SystemDriver(new SystemDriverSolaris());
+            return new SystemDriverSolaris();
         case WINDOWS:
-            return new SystemDriver(new SystemDriverWindows());
+            return new SystemDriverWindows();
         default:
             throw new UnsupportedOperationException("OSHI is not supported on this platform");
         }
@@ -90,7 +105,8 @@ public final class OSHI {
     /**
      * Build a disposable handle that provides Windows system information.<br>
      * <br>
-     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * Note: for cross-platform contexts, always use {@link #getSystem()}
+     * instead.
      * 
      * @return A new {@link WindowsSystem} handle
      */
@@ -103,7 +119,8 @@ public final class OSHI {
     /**
      * Build a disposable handle that provides Linux system information.<br>
      * <br>
-     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * Note: for cross-platform contexts, always use {@link #getSystem()}
+     * instead.
      * 
      * @return A new {@link LinuxSystem} handle
      */
@@ -116,7 +133,8 @@ public final class OSHI {
     /**
      * Build a disposable handle that provides macOS system information.<br>
      * <br>
-     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * Note: for cross-platform contexts, always use {@link #getSystem()}
+     * instead.
      * 
      * @return A new {@link MacSystem} handle
      */
@@ -129,7 +147,8 @@ public final class OSHI {
     /**
      * Build a disposable handle that provides Solaris system information.<br>
      * <br>
-     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * Note: for cross-platform contexts, always use {@link #getSystem()}
+     * instead.
      * 
      * @return A new {@link SolarisSystem} handle
      */
@@ -142,7 +161,8 @@ public final class OSHI {
     /**
      * Build a disposable handle that provides FreeBSD system information.<br>
      * <br>
-     * Note: for cross-platform contexts, always use {@link #getSystem()}.
+     * Note: for cross-platform contexts, always use {@link #getSystem()}
+     * instead.
      * 
      * @return A new {@link FreeBsdSystem} handle
      */

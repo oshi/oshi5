@@ -23,12 +23,7 @@
  */
 package oshi.driver.hardware.nic;
 
-import static oshi.api.hardware.nic.internal.NicAttribute.IPV4;
-import static oshi.api.hardware.nic.internal.NicAttribute.IPV6;
-import static oshi.api.hardware.nic.internal.NicAttribute.MAC;
-import static oshi.api.hardware.nic.internal.NicAttribute.MTU;
-import static oshi.api.hardware.nic.internal.NicAttribute.NAME;
-import static oshi.api.hardware.nic.internal.NicAttribute.VIRTUAL;
+import static oshi.api.hardware.nic.internal.NicAttributeEnum.*;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -45,8 +40,7 @@ public class NicDriverJava extends ExtensionDriver {
     protected NetworkInterface instance;
     private NicContainer container;
 
-    public NicDriverJava(NicContainer container, NetworkInterface instance) {
-        this.container = container;
+    public NicDriverJava(NetworkInterface instance) {
         this.instance = instance;
     }
 
@@ -79,6 +73,11 @@ public class NicDriverJava extends ExtensionDriver {
     @NicQuery(MTU)
     private void mtu() throws SocketException {
         container.mtu = instance.getMTU();
+    }
+
+    @Override
+    public boolean compatible() {
+        return true;
     }
 
 }

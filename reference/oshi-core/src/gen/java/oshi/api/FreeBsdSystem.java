@@ -31,10 +31,10 @@ import oshi.api.hardware.firmware.FirmwareFreeBsd;
 import oshi.api.hardware.nic.NicFreeBsd;
 
 @Generated("oshi.ApiGenerator")
-public interface FreeBsdSystem {
-  Stream<NicFreeBsd> getNicStream();
+public interface FreeBsdSystem extends MultiSystem {
+    Stream<? extends NicFreeBsd> getNicStream();
 
-  Stream<DiskFreeBsd> getDiskStream();
+    Stream<? extends DiskFreeBsd> getDiskStream();
 
-  FirmwareFreeBsd getFirmware();
+    FirmwareFreeBsd getFirmware();
 }

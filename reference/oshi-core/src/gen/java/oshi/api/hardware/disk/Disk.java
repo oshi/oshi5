@@ -25,120 +25,123 @@
 package oshi.api.hardware.disk;
 
 import javax.annotation.processing.Generated;
+import oshi.api.Container;
 
 @Generated("oshi.ApiGenerator")
-public interface Disk {
-  String getName();
+public interface Disk extends Container {
+    String getName();
 
-  String getModel();
+    String getPath();
 
-  String getSerial();
+    String getModel();
 
-  Long getSize();
+    String getSerial();
 
-  Long querySize();
+    Long getSize();
 
-  Long getReads();
+    Long querySize();
 
-  Long queryReads();
+    Long getReads();
 
-  Long getReadBytes();
+    Long queryReads();
 
-  Long queryReadBytes();
+    Long getReadBytes();
 
-  Long getWrites();
+    Long queryReadBytes();
 
-  Long queryWrites();
+    Long getWrites();
 
-  Long getWriteBytes();
+    Long queryWrites();
 
-  Long queryWriteBytes();
+    Long getWriteBytes();
 
-  Long getQueueLength();
+    Long queryWriteBytes();
 
-  Long queryQueueLength();
+    Long getQueueLength();
 
-  Long getTransferTime();
+    Long queryQueueLength();
 
-  Long queryTransferTime();
+    Long getTransferTime();
 
-  String getModelFamily();
+    Long queryTransferTime();
 
-  String queryModelFamily();
+    String getModelFamily();
 
-  String getFirmwareVersion();
+    String queryModelFamily();
 
-  String queryFirmwareVersion();
+    String getFirmwareVersion();
 
-  Long getRotationRate();
+    String queryFirmwareVersion();
 
-  Long queryRotationRate();
+    Long getRotationRate();
 
-  Long getReadErrorRate();
+    Long queryRotationRate();
 
-  Long queryReadErrorRate();
+    Long getReadErrorRate();
 
-  Long getSpinUpTime();
+    Long queryReadErrorRate();
 
-  Long querySpinUpTime();
+    Long getSpinUpTime();
 
-  Long getStartStopCycles();
+    Long querySpinUpTime();
 
-  Long queryStartStopCycles();
+    Long getStartStopCycles();
 
-  Long getReallocatedSectors();
+    Long queryStartStopCycles();
 
-  Long queryReallocatedSectors();
+    Long getReallocatedSectors();
 
-  Long getSeekErrorRate();
+    Long queryReallocatedSectors();
 
-  Long querySeekErrorRate();
+    Long getSeekErrorRate();
 
-  Long getPowerOnTime();
+    Long querySeekErrorRate();
 
-  Long queryPowerOnTime();
+    Long getPowerOnTime();
 
-  Long getSpinRetries();
+    Long queryPowerOnTime();
 
-  Long querySpinRetries();
+    Long getSpinRetries();
 
-  Long getCalibrationRetries();
+    Long querySpinRetries();
 
-  Long queryCalibrationRetries();
+    Long getCalibrationRetries();
 
-  Long getPowerCycles();
+    Long queryCalibrationRetries();
 
-  Long queryPowerCycles();
+    Long getPowerCycles();
 
-  Long getPoweroffRetracts();
+    Long queryPowerCycles();
 
-  Long queryPoweroffRetracts();
+    Long getPoweroffRetracts();
 
-  Long getLoadCycles();
+    Long queryPoweroffRetracts();
 
-  Long queryLoadCycles();
+    Long getLoadCycles();
 
-  Long getTemperature();
+    Long queryLoadCycles();
 
-  Long queryTemperature();
+    Long getTemperature();
 
-  Long getReallocatedEvents();
+    Long queryTemperature();
 
-  Long queryReallocatedEvents();
+    Long getReallocatedEvents();
 
-  Long getCurrentPendingSector();
+    Long queryReallocatedEvents();
 
-  Long queryCurrentPendingSector();
+    Long getCurrentPendingSector();
 
-  Long getOfflineUncorrectable();
+    Long queryCurrentPendingSector();
 
-  Long queryOfflineUncorrectable();
+    Long getOfflineUncorrectable();
 
-  Long getCrcErrors();
+    Long queryOfflineUncorrectable();
 
-  Long queryCrcErrors();
+    Long getCrcErrors();
 
-  Long getMultizoneErrorRate();
+    Long queryCrcErrors();
 
-  Long queryMultizoneErrorRate();
+    Long getMultizoneErrorRate();
+
+    Long queryMultizoneErrorRate();
 }

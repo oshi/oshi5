@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package oshi.driver;
+package oshi.driver.system;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -36,10 +36,13 @@ import oshi.api.hardware.firmware.FirmwareLinux;
 import oshi.api.hardware.firmware.internal.FirmwareContainerLinux;
 import oshi.api.hardware.nic.NicLinux;
 import oshi.api.hardware.nic.internal.NicContainerLinux;
+import oshi.driver.ContainerFactory;
 import oshi.driver.hardware.disk.DiskDriverLinux;
+import oshi.driver.hardware.disk.DiskDriverLinuxSMART;
 import oshi.driver.hardware.firmware.FirmwareDriverLinux;
 import oshi.driver.hardware.nic.NicDriverJava;
 import oshi.driver.hardware.nic.NicDriverLinux;
+import oshi.old.GlobalConfig;
 import oshi.old.Udev;
 
 public class SystemDriverLinux implements LinuxSystem {
@@ -48,13 +51,12 @@ public class SystemDriverLinux implements LinuxSystem {
     public Stream<NicLinux> getNicStream() {
         try {
             return NetworkInterface.networkInterfaces().map(nif -> {
-                var container = new NicContainerLinux();
-                container.name = nif.getName();
-                var driver = new NicDriverLinux(container);
-                driver.register(new NicDriverJava(container, nif));
-
-                container.attach(driver);
-                return container;
+                return ContainerFactory.build(NicContainerLinux.class, container -> {
+                    container.name = nif.getName();
+                }, NicDriverLinux.class, extensions -> {
+                    if (GlobalConfig.get("oshi.driver.extension.networkinterface", true))
+                        extensions.add(new NicDriverJava(nif));
+                });
             });
         } catch (SocketException e) {
             // No interfaces found or I/O error occurred
@@ -78,22 +80,26 @@ public class SystemDriverLinux implements LinuxSystem {
         entry = Udev.INSTANCE.udev_enumerate_get_list_entry(enumerate);
         while (true) {
             oldEntry = entry;
-            device = Udev.INSTANCE.udev_device_new_from_syspath(handle, Udev.INSTANCE.udev_list_entry_get_name(entry));
+            String name = Udev.INSTANCE.udev_list_entry_get_name(entry);
+            device = Udev.INSTANCE.udev_device_new_from_syspath(handle, name);
             if (device == null) {
                 break;
             }
 
-            // Ignore loopback and ram disks; do nothing
-            if (!Udev.INSTANCE.udev_device_get_devnode(device).startsWith("/dev/loop")
-                    && !Udev.INSTANCE.udev_device_get_devnode(device).startsWith("/dev/ram")) {
-                if ("disk".equals(Udev.INSTANCE.udev_device_get_devtype(device))) {
-                    var container = new DiskContainerLinux();
-                    container.name = Udev.INSTANCE.udev_list_entry_get_name(entry);
-                    var driver = new DiskDriverLinux(container);
-                    // TODO SMART extension
-                    container.attach(driver);
+            String path = Udev.INSTANCE.udev_device_get_devnode(device);
 
-                    results.add(container);
+            // Ignore loopback and ram disks; do nothing
+            if (!path.startsWith("/dev/loop") && !path.startsWith("/dev/ram")) {
+                if ("disk".equals(Udev.INSTANCE.udev_device_get_devtype(device))) {
+                    var c = ContainerFactory.build(DiskContainerLinux.class, container -> {
+                        container.name = name;
+                        container.path = path;
+                    }, DiskDriverLinux.class, extensions -> {
+                        if (GlobalConfig.get("oshi.driver.extension.smart", true))
+                            extensions.add(new DiskDriverLinuxSMART());
+                    });
+
+                    results.add(c);
                 }
             }
 
@@ -106,11 +112,7 @@ public class SystemDriverLinux implements LinuxSystem {
 
     @Override
     public FirmwareLinux getFirmware() {
-        var container = new FirmwareContainerLinux();
-        var driver = new FirmwareDriverLinux(container);
-
-        container.attach(driver);
-        return container;
+        return ContainerFactory.build(FirmwareContainerLinux.class, FirmwareDriverLinux.class);
     }
 
 }

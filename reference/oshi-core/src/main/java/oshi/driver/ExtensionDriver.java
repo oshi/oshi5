@@ -25,7 +25,11 @@ package oshi.driver;
 
 /**
  * A marker class for a driver that provides additional query methods to a
- * {@link ComponentDriver}.
+ * {@link ComponentDriver}. Usually an {@link ExtensionDriver} is responsible
+ * for fetching a group of related attributes that depend on external software
+ * which may or may not be present.
  */
-public class ExtensionDriver {
+public abstract class ExtensionDriver {
+
+    public abstract boolean compatible();
 }

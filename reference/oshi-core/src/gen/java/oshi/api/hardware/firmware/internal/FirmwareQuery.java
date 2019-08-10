@@ -34,5 +34,5 @@ import javax.annotation.processing.Generated;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface FirmwareQuery {
-  FirmwareAttribute[] value();
+    FirmwareAttributeEnum[] value();
 }

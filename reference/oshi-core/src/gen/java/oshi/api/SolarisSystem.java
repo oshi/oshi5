@@ -31,10 +31,10 @@ import oshi.api.hardware.firmware.FirmwareSolaris;
 import oshi.api.hardware.nic.NicSolaris;
 
 @Generated("oshi.ApiGenerator")
-public interface SolarisSystem {
-  Stream<NicSolaris> getNicStream();
+public interface SolarisSystem extends MultiSystem {
+    Stream<? extends NicSolaris> getNicStream();
 
-  Stream<DiskSolaris> getDiskStream();
+    Stream<? extends DiskSolaris> getDiskStream();
 
-  FirmwareSolaris getFirmware();
+    FirmwareSolaris getFirmware();
 }
